@@ -141,7 +141,6 @@ if __name__ == '__main__':
             body = b"OK"
             return websockets.http.Response(200, "OK", headers, body)
         return None # Let the default WebSocket handler take over for other paths
-
     async def main():
         global main_loop
         main_loop = asyncio.get_running_loop()
@@ -167,7 +166,7 @@ if __name__ == '__main__':
             f.write(html_content)
             
         print(f"WebSocket server running on port {port}")
-        async with websockets.serve(echo, "localhost", port, process_request=health_check):
+        async with websockets.serve(echo, "0.0.0.0", port, process_request=health_check): # Bind to 0.0.0.0 and restore health check
             try:
                 await asyncio.Future()  # run forever
             except asyncio.CancelledError:
