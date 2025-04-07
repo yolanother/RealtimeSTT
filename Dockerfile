@@ -12,6 +12,7 @@ RUN pip3 install -r /app/requirements-gpu.txt
 
 RUN mkdir example_browserclient
 COPY example_browserclient/server.py /app/example_browserclient/server.py
+COPY example_browserclient/index.html /app/example_browserclient/index.html
 COPY RealtimeSTT /app/RealtimeSTT
 
 EXPOSE 9001
