@@ -3,7 +3,7 @@ FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04 as gpu
 WORKDIR /app
 
 RUN apt-get update -y && \
-  apt-get install -y python3 python3-pip libcudnn9 libcudnn9-dev libcublas-12-4 portaudio19-dev
+  apt-get install -y python3 python3-pip libcudnn9-cuda-12 libcudnn9-dev-cuda-12 libcublas-12-4 portaudio19-dev
 
 RUN pip3 install torch==2.3.0 torchaudio==2.3.0
 
