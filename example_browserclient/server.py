@@ -9,6 +9,11 @@ if __name__ == '__main__':
     import json
     import logging
     import sys
+    import os
+    from dotenv import load_dotenv
+    
+    # Load environment variables from .env file
+    load_dotenv()
 
     logging.basicConfig(
         level=logging.INFO,
@@ -135,7 +140,22 @@ if __name__ == '__main__':
         recorder_ready.wait()
 
         print("Server started. Press Ctrl+C to stop the server.")
-        async with websockets.serve(echo, "localhost", 8001):
+        port = int(os.getenv('BROWSERCLIENT_PORT', 9001)) # Default to 9001 to match Docker EXPOSE
+        
+        # Serve the HTML file with the port injected
+        html_path = os.path.join(os.path.dirname(__file__), 'index.html')
+        with open(html_path, 'r') as f:
+            html_content = f.read()
+        
+        # Replace the default port with the actual port from environment
+        html_content = html_content.replace('const WS_PORT = 9050;', f'const WS_PORT = {port};')
+        
+        # Write the modified HTML file
+        with open(html_path, 'w') as f:
+            f.write(html_content)
+            
+        print(f"WebSocket server running on port {port}")
+        async with websockets.serve(echo, "localhost", port):
             try:
                 await asyncio.Future()  # run forever
             except asyncio.CancelledError:
