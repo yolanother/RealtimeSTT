@@ -16,8 +16,8 @@ COPY example_browserclient/index.html /app/example_browserclient/index.html
 COPY RealtimeSTT /app/RealtimeSTT
 
 EXPOSE 9001
-ENV PYTHONPATH "${PYTHONPATH}:/app"
-RUN export PYTHONPATH="${PYTHONPATH}:/app"
+ENV PYTHONPATH="/app:${PYTHONPATH}"
+# RUN export PYTHONPATH="${PYTHONPATH}:/app" # Remove ineffective RUN export
 CMD ["python3", "example_browserclient/server.py"]
 
 # --------------------------------------------

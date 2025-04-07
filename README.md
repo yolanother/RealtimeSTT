@@ -103,6 +103,35 @@ pip install RealtimeSTT
 
 This will install all the necessary dependencies, including a **CPU support only** version of PyTorch.
 
+### Port Configuration
+
+RealtimeSTT uses several ports for its services. By default, these ports are:
+
+- RTSTT service: 9050 (previously 9001)
+- NGINX service: 9051 (previously 8081)
+- Control WebSocket: 9050 (previously 8011)
+- Data WebSocket: 9051 (previously 8012)
+- WebServer: 9050 (previously 5025)
+- BrowserClient: 9050 (previously 8001)
+
+You can customize these ports by creating a `.env` file in the root directory with the following content:
+
+```
+# RealtimeSTT Server Configuration
+RTSTT_PORT=9050
+NGINX_PORT=9051
+
+# Additional ports that can be configured
+CONTROL_PORT=9050
+DATA_PORT=9051
+WEBSERVER_PORT=9050
+BROWSERCLIENT_PORT=9050
+```
+
+Modify the values as needed for your environment.
+
+The browser client (example_browserclient) will automatically use the port specified in the BROWSERCLIENT_PORT environment variable. The server injects this port into the HTML file when it starts, so the client JavaScript code will connect to the correct port.
+
 Although it is possible to run RealtimeSTT with a CPU installation only (use a small model like "tiny" or "base" in this case) you will get way better experience using CUDA (please scroll down).
 
 ### Linux Installation

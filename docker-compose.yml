@@ -10,7 +10,7 @@ services:
       # - ./example_browserclient:/app/example_browserclient
       - cache:/root/.cache
     ports:
-      - "9001:9001"
+      - "${RTSTT_PORT:-9050}:9001"
 
     # if 'gpu' target
     deploy:
@@ -22,7 +22,7 @@ services:
     image: nginx:latest
     container_name: nginx_web
     ports:
-      - "8081:80"
+      - "${NGINX_PORT:-9051}:80"
     volumes:
       - ./example_browserclient:/usr/share/nginx/html
 

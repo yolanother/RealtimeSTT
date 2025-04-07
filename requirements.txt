@@ -11,3 +11,4 @@ websockets==14.2
 websocket-client==1.8.0
 numpy<2.0.0
 soundfile==0.13.1
+python-dotenv==1.0.0

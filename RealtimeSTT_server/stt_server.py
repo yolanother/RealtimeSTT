@@ -82,6 +82,11 @@ import logging
 import asyncio
 import pyaudio
 import sys
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 debug_logging = False
@@ -380,11 +385,13 @@ def parse_arguments():
     parser.add_argument('-i', '--input-device', '--input-device-index', type=int, default=1,
                     help='Index of the audio input device to use. Use this option to specify a particular microphone or audio input device based on your system. Default is 1.')
 
-    parser.add_argument('-c', '--control', '--control_port', type=int, default=8011,
-                        help='The port number used for the control WebSocket connection. Control connections are used to send and receive commands to the server. Default is port 8011.')
+    parser.add_argument('-c', '--control', '--control_port', type=int,
+                        default=int(os.getenv('CONTROL_PORT', 9050)),
+                        help='The port number used for the control WebSocket connection. Control connections are used to send and receive commands to the server. Default is port 9050.')
 
-    parser.add_argument('-d', '--data', '--data_port', type=int, default=8012,
-                        help='The port number used for the data WebSocket connection. Data connections are used to send audio data and receive transcription updates in real time. Default is port 8012.')
+    parser.add_argument('-d', '--data', '--data_port', type=int,
+                        default=int(os.getenv('DATA_PORT', 9051)),
+                        help='The port number used for the data WebSocket connection. Data connections are used to send audio data and receive transcription updates in real time. Default is port 9051.')
 
     parser.add_argument('-w', '--wake_words', type=str, default="",
                         help='Specify the wake word(s) that will trigger the server to start listening. For example, setting this to "Jarvis" will make the system start transcribing when it detects the wake word "Jarvis". Default is "Jarvis".')

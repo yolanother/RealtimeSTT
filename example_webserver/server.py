@@ -1,8 +1,14 @@
 WAIT_FOR_START_COMMAND = False
 
 if __name__ == '__main__':
+    import os
+    from dotenv import load_dotenv
+    
+    # Load environment variables from .env file
+    load_dotenv()
+    
     server = "0.0.0.0"
-    port = 5025
+    port = int(os.getenv('WEBSERVER_PORT', 9050))
 
     print (f"STT speech to text server")
     print (f"runs on http://{server}:{port}")
